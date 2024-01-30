@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stopwatch</title>
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+
+    <header>
+      <p>StopWatch</p>
+    </header>
+
+    <main>
+      <section class="running-timer">
+        <section class="time">
+          <section class="hour">
+            <p class="zero-keeper">0</p>
+            <p class="hourCount">00</p>
+          </section>
+
+          <p class="hourName">:</p>
+
+          <section class="minute">
+            <p class="zero-keeper">0</p>
+            <p class="minuteCount">00</p>
+          </section>
+
+          <p class="minuteName">:</p>
+
+          <section class="second">
+            <p class="zero-keeper">0</p>
+            <p class="secondCount">00</p>
+          </section>
+        </section>
+
+        <section class="time-ms">
+          <section class="ms">
+            <p class="zero-keeper">0</p>
+            <p class="msCount">0</p>
+          </section>
+        </section>
+      </section>
+
+      <section class="laps-display">
+        <section class="overflow">
+          <section class="numbering"></section>
+          <section class="display-time">
+            <section class="display-hour"></section>
+            <section class="display-min"></section>
+            <section class="display-sec"></section>
+          </section>
+        </section>
+      </section>
+
+      <section class="action">
+        <section class="buttonChange resetArea">
+          <button class="reset">
+            <img
+              height="25px"
+              width="25px"
+              src="icons/restart_alt_FILL1_wght400_GRAD0_opsz48.svg"
+              alt=""
+            />
+          </button>
+        </section>
+        <section class="buttonChange">
+          <button class="playPause">
+            <img
+              height="25px"
+              width="25px"
+              src="icons/play_arrow_FILL1_wght400_GRAD0_opsz48.svg"
+              alt=""
+            />
+          </button>
+          <button class="pause">
+            <img
+              height="25px"
+              width="25px"
+              src="icons/pause_FILL1_wght400_GRAD0_opsz48.svg"
+              alt=""
+            />
+          </button>
+        </section>
+        <section class="buttonChange lapsArea">
+          <button class="time-laps">
+            <img
+              height="25px"
+              width="25px"
+              src="icons/timer_FILL0_wght400_GRAD0_opsz48.svg"
+              alt=""
+            />
+          </button>
+        </section>
+      </section>
+    </main>
+    <script src="index.js"></script>
+  </body>
+</html>

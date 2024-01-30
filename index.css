@@ -1,0 +1,240 @@
+@font-face {
+  font-family: popins;
+  src: url(fonts/Poppins-Regular.ttf);
+}
+@font-face {
+  font-family: popinsBold;
+  src: url(fonts/Poppins-BoldItalic.ttf);
+}
+
+header{
+  position: absolute;
+  color: rgb(174, 161, 161);
+  top: 0%;
+  font-size: 32px;
+  font-family: popinsBold;
+  
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  font-size: 55px;
+  font-family: popins;
+  background-color: black;
+}
+
+main {
+  width: 80vw;
+  height: 100%;
+  color: aliceblue;
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.time {
+  font-family: popinsBold;
+  display: flex;
+  align-items: center;
+}
+
+.time p {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.hour,
+.minute,
+.second {
+  height: 72px;
+  width: 72px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.running-timer {
+  height: 192px;
+  width: 192px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 20px solid blueviolet;
+  padding: 60px;
+  border-radius: 50%;
+  margin-top: 100px;
+}
+
+.time-ms,
+.ms {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  font-size: 40px;
+  height: 40px;
+  font-family: popinsBold;
+  width: 85%;
+}
+
+.laps-display {
+  font-size: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.laps-display > section {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  /* border-radius: 0px 0px 25px 25px; */
+  
+}
+
+.numbering {
+  font-size: 16px;
+  margin: 8px;
+  display: flex;
+  flex-direction: column;
+  height: 25vh;
+}
+
+.overflow {
+  display: flex;
+  /* height: 4vh; */
+  justify-content: center;
+  overflow: hidden;
+  overflow-y: scroll;
+  scrollbar-width: none;
+}
+
+.numbering p {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.overflow::-webkit-scrollbar {
+  display: none;
+}
+
+.display-time {
+  font-size: 16px;
+  display: flex;
+  height: 25vh;
+  justify-content: center;
+}
+
+.display-time section {
+  margin: 8px;
+}
+
+.display-time section p {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.action {
+  display: flex;
+  position: absolute;
+  bottom: 5%;
+  backdrop-filter: blur(0.55px);
+}
+
+.action section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 120px;
+  width: 140px;
+  
+}
+
+.buttonChange{
+  background-color: rgba(0, 0, 0, 0.295);
+}
+
+.playPause
+{
+  position: relative;
+  border-radius: 50%;
+  height: 100px;
+  width: 100px;
+  border: none;
+  background-color: rgb(105, 155, 155);
+  
+}
+
+.buttonChange button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pause {
+  position: relative;
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+  font-size: 32px;
+  border: none;
+  background-color: rgb(105, 155, 155);
+}
+
+.reset,
+.time-laps {
+  height: 60px;
+  width: 60px;
+  border-radius: 50%;
+  border: none;
+  background-color: rgb(138, 106, 169);
+}
+
+
+@media(width<450px){
+  .action .resetArea,.action .lapsArea{
+    width: 90px;
+  }
+}
+
+
+@media (width<350px) {
+  body {
+    font-size: 35px;
+  }
+  .ms {
+    font-size: 35px;
+    font-family: popinsBold;
+  }
+  .running-timer {
+    padding: 20px;
+  }
+  .action section {
+    width: 120px;
+    height: 100px;
+  }
+  .action .resetArea,.action .lapsArea{
+    width: 70px;
+  }
+
+  .playPause {
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+  }
+  .pause {
+    height: 100px;
+    width: 100px;
+  }
+  .reset,
+  .time-laps {
+    height: 50px;
+    width: 50px;
+  }
+}
