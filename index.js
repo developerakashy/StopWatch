@@ -1,322 +1,320 @@
-var hour = document.querySelector(".hourCount");
-var minute = document.querySelector(".minuteCount");
-var hourColon = document.querySelector(".hourName");
-var minuteColon = document.querySelector(".minuteName");
-var timeMs = document.querySelector(".time-ms");
-var hourBeforeColon = document.querySelector(".hour");
-var minuteBeforeColon = document.querySelector(".minute");
-var second = document.querySelector(".secondCount");
-var ms = document.querySelector(".msCount");
+const hour = document.querySelector(".hour");
+const minute = document.querySelector(".minute");
+const second = document.querySelector(".second");
+const millisecond = document.querySelector(".ms");
 
-var timePeriodOfHour = 0;
-var timePeriodOfMinute = 0;
-var timePeriodOfsecond = 0;
-var timePeriodOfMs = 0;
+const minuteColonSecond = document.querySelector(".minute-colon-second")
+const hourColonMinute = document.querySelector(".hour-colon-minute")
 
-hour.textContent = timePeriodOfHour;
-minute.textContent = timePeriodOfMinute;
-second.textContent = timePeriodOfsecond;
-ms.textContent = timePeriodOfMs;
+const playBtn = document.querySelector(".play-btn");
+const pauseBtn = document.querySelector(".pause-btn");
+const resetBtn = document.querySelector(".reset");
+const timelapsBtn = document.querySelector(".time-laps");
 
-hourBeforeColon.style.display = "none";
-minuteBeforeColon.style.display = "none";
-minuteColon.style.display = "none";
-hourColon.style.display = "none";
+const lapsHourColonMinute = document.querySelector(".laps-hour-colon-minute");
+const lapsMinuteColonSecond = document.querySelector(".laps-minute-colon-second");
 
-var removetwodigitKeeperMs = () => {
-  document.querySelectorAll(".zero-keeper")[3].style.display = "none";
-};
+const lapsHour = document.querySelector(".laps-hour");
+const lapsMinute = document.querySelector(".laps-minute");
+const lapsSecond = document.querySelector(".laps-second");
+const lapsMillisecond = document.querySelector(".laps-millisecond");
 
-var addtwodigitKeeperMs = () => {
-  document.querySelectorAll(".zero-keeper")[3].style.display = "revert";
-};
+const header = document.querySelector('header')
+const lapsList = document.querySelector('.laps-list')
+const lapsDisplay = document.querySelector('.laps-display')
 
-var removetwodigitKeeperS = () => {
-  document.querySelectorAll(".zero-keeper")[2].style.display = "none";
-};
+let highestLapTime = '2024-10-10T00:00:00'
+let lowestLapTime = '2024-10-10T23:59:59'
 
-var addtwodigitKeeperS = () => {
-  document.querySelectorAll(".zero-keeper")[2].style.display = "revert";
-};
+let timeInterval
+let lapTimingsArray = []
 
-var removetwodigitKeeperM = () => {
-  document.querySelectorAll(".zero-keeper")[1].style.display = "none";
-};
+let millisecondCount = 0
+let secondCount = 0
+let minuteCount = 0
+let hourCount = 0
 
-var addtwodigitKeeperM = () => {
-  document.querySelectorAll(".zero-keeper")[1].style.display = "revert";
-};
+let lapMillisecondCount = 0
+let lapSecondCount = 0
+let lapMinuteCount = 0
+let lapHourCount = 0
 
-var removetwodigitKeeperH = () => {
-  document.querySelectorAll(".zero-keeper")[0].style.display = "none";
-};
+function updateCurrentTiming(){
+  millisecondCount += 1
+  lapMillisecondCount += 1
 
-var addtwodigitKeeperH = () => {
-  document.querySelectorAll(".zero-keeper")[0].style.display = "revert";
-};
+    if(millisecondCount === 10){
+      secondCount += 1
+      millisecondCount = 0
 
-const HourChanger = () => {
-  if (timePeriodOfHour === 9) {
-    removetwodigitKeeperH();
-  }
-  timePeriodOfHour += 1;
-  hour.textContent = timePeriodOfHour;
-};
+      if(secondCount === 60){
+        minuteCount += 1
+        secondCount = 0
 
-const minuteChanger = () => {
-  if (timePeriodOfMinute === 59) {
-    HourChanger();
-    hourBeforeColon.style.display = "revert";
-    hourColon.style.display = "revert";
-    hourBeforeColon.style.display = "flex";
-    timeMs.style.width = "134%";
-    let mediaQuery = window.matchMedia("(width < 350px)");
-    if (mediaQuery.matches) {
-      timeMs.style.width = "100%";
+        if(minuteCount === 60){
+          hourCount += 1
+          minuteCount = 0
+
+        }
+      }
     }
-    addtwodigitKeeperM();
-    timePeriodOfMinute = 0;
-    minute.textContent = timePeriodOfMinute;
-  } else {
-    if (timePeriodOfMinute === 9) {
-      removetwodigitKeeperM();
+
+    if(lapMillisecondCount === 10){
+      lapSecondCount += 1
+      lapMillisecondCount = 0
+
+      if(lapSecondCount === 60){
+        lapMinuteCount += 1
+        lapSecondCount = 0
+
+        if(lapMinuteCount === 60){
+          lapHourCount += 1
+          lapMinuteCount = 0
+
+        }
+      }
     }
-    timePeriodOfMinute += 1;
-    minute.textContent = timePeriodOfMinute;
-  }
-};
 
-const secondChanger = () => {
-  if (timePeriodOfsecond === 59) {
-    minuteChanger();
-    minuteBeforeColon.style.display = "revert";
-    minuteColon.style.display = "revert";
-    minuteBeforeColon.style.display = "flex";
-    addtwodigitKeeperS();
-    timePeriodOfsecond = 0;
-    second.textContent = timePeriodOfsecond;
-  } else {
-    if (timePeriodOfsecond === 9) {
-      removetwodigitKeeperS();
+
+    showUpdatedTime()
+
+}
+
+
+function showUpdatedTime(){
+  millisecond.textContent = millisecondCount
+  lapsMillisecond.textContent = lapMillisecondCount
+
+  second.textContent = secondCount < 10 ? `0${secondCount}` : secondCount
+  lapsSecond.textContent = lapSecondCount < 10 ? `0${lapSecondCount}` : lapSecondCount
+
+  minute.textContent = minuteCount < 10 ? `0${minuteCount}` : minuteCount
+  lapsMinute.textContent = lapMinuteCount < 10 ? `0${lapMinuteCount}` : lapMinuteCount
+
+  hour.textContent = hourCount < 10 ? `0${hourCount}` : hourCount
+  lapsHour.textContent = lapHourCount < 10 ? `0${lapHourCount}` : lapHourCount
+
+
+  if(minuteCount > 0 || hourCount > 0){
+    minute.classList.remove('hidden')
+    minuteColonSecond.classList.remove('hidden')
+
+    if(hourCount > 0){
+        hour.classList.remove('hidden')
+        hourColonMinute.classList.remove('hidden')
     }
-    timePeriodOfsecond += 1;
-    second.textContent = timePeriodOfsecond;
   }
-};
 
-const msChanger = () => {
-  if (timePeriodOfMs === 99) {
-    addtwodigitKeeperMs();
-    timePeriodOfMs = 0;
-    ms.textContent = timePeriodOfMs;
-  } else {
-    if (timePeriodOfMs === 9) {
-      removetwodigitKeeperMs();
+  if(lapMinuteCount > 0 || lapHourCount > 0){
+    lapsMinute.classList.remove('hidden')
+    lapsMinuteColonSecond.classList.remove('hidden')
+
+    if(lapHourCount > 0){
+      lapsHour.classList.remove('hidden')
+      lapsHourColonMinute.classList.remove('hidden')
     }
-    timePeriodOfMs += 1;
-    ms.textContent = timePeriodOfMs;
   }
-};
 
-var playPauseButton = document.querySelector(".playPause");
-var pause = document.querySelector(".pause");
-var reset = document.querySelector(".reset");
-var timelaps = document.querySelector(".time-laps");
-var displayTime = document.querySelector(".display-time");
-var displayHour = document.querySelector(".display-hour");
-var displayMinute = document.querySelector(".display-min");
-var displaySecond = document.querySelector(".display-sec");
-var displayMs = document.querySelector(".display-ms");
-var lapsDisplay = document.querySelector(".laps-display");
-var lapsCountDisplay = document.querySelector(".numbering");
-var lapsCount = 0;
 
-// lapsDisplay.style.display = "none";
-reset.style.display = "none";
-pause.style.display = "none";
-timelaps.style.display = "none";
-var textCount = 0;
+}
 
-const blinknone = () => {
-  document.querySelector(".time").style.display = "none";
-  document.querySelector(".time-ms").style.display = "none";
-};
 
-const blinkrevert = () => {
-  document.querySelector(".time").style.display = "revert";
-  document.querySelector(".time-ms").style.display = "revert";
-  document.querySelector(".time").style.display = "flex";
-  document.querySelector(".time-ms").style.display = "flex";
-};
 
-playPauseButton.addEventListener("click",(event)=>{
-   event.preventDefault();
-  pause.style.transition = "border-radius .5s 0s,width .5s 0s";
-  setTimeout(()=>{
-    pause.style.width = "240px";
-    pause.style.borderRadius = "40px";
-    playPauseButton.style.width = "140px";
-    playPauseButton.style.borderRadius = "30px";
 
-  },10)
-})
 
-pause.addEventListener("click",(event)=>{
-  event.preventDefault();
- playPauseButton.style.transition = "border-radius .5s 0s,width .5s 0s";
- setTimeout(()=>{
-   playPauseButton.style.width = "100px";
-   playPauseButton.style.borderRadius = "50%";
-   pause.style.width = "100px";
-   pause.style.borderRadius = "50%";
+playBtn.addEventListener('click', (e) => startOrResumeTheStopWatch(e))
+pauseBtn.addEventListener('click', (e) => pauseTheStopWatch(e))
 
- },10)
-})
+timelapsBtn.addEventListener('click', showAndResetTimeLaps)
+resetBtn.addEventListener('click', resetTheStopWatch)
 
-timelaps.addEventListener("click",(event)=>{
-  event.preventDefault()
-  document.querySelector(".running-timer").style.transition = "margin-top .5s 0s";
-  setTimeout(()=>{
-    document.querySelector(".overflow").style.height = "236px";
-  },500)
-})
 
- 
 
-playPauseButton.addEventListener("click", () => {
-  var secondInterval = setInterval(secondChanger, 1000);
-  var msInterval = setInterval(msChanger, 10);
-  playPauseButton.style.display = "none";
-  pause.style.display = "revert";
-  
-  reset.style.display = "revert";
-  timelaps.style.display = "revert";
 
-  pause.addEventListener("click", () => {
-    clearInterval(secondInterval);
-    clearInterval(msInterval);
 
-    var blinkout = setInterval(blinkrevert, 500);
-    var blinkin = setInterval(blinknone, 1000);
+function startOrResumeTheStopWatch(e){
+    timeInterval = setInterval(updateCurrentTiming, 100)
 
-    playPauseButton.addEventListener("click", () => {
-      clearInterval(blinkin);
-      clearInterval(blinkout);
-      blinkrevert();
-    });
-    reset.addEventListener("click", () => {
-      clearInterval(blinkin);
-      clearInterval(blinkout);
-      blinkrevert();
-    });
-    pause.style.display = "none";
-    playPauseButton.style.display = "revert";
-    timelaps.style.display = "none";
-  });
+    let element = e.currentTarget
 
-  reset.addEventListener("click", () => {
-    var textlaps = document.querySelectorAll(".para-text");
-    for (let i = 0; i < textCount; i++) {
-      textlaps[i].style.display = "none";
+    playBtn.classList.add('hidden')
+    pauseBtn.classList.remove('hidden')
+    resetBtn.classList.remove('hidden')
+    timelapsBtn.classList.remove('hidden')
+
+    setTimeout(function(){
+      resizeBtn(element)
+    }, 0)
+
+}
+
+function pauseTheStopWatch(e){
+    clearInterval(timeInterval)
+
+    let element = e.currentTarget
+
+    playBtn.classList.remove('hidden')
+    pauseBtn.classList.add('hidden')
+    timelapsBtn.classList.add('hidden')
+
+    setTimeout(function(){
+      resizeBtn(element)
+    }, 0)
+
+}
+
+function resizeBtn(btn){
+    btn = btn.classList.contains('pause-btn')
+
+    playBtn.style.width = btn ? '100px' : '170px';
+    pauseBtn.style.width = btn ? '100px' : '170px';
+    playBtn.style.borderRadius = btn ? '50%' : '100px';
+    pauseBtn.style.borderRadius = btn ? '50%' : '100px';
+}
+
+function showAndResetTimeLaps(){
+
+  let isHighestLap = false
+  let isLowestLap = false
+
+  let lapHour = lapHourCount < 10 ? `0${lapHourCount}` : lapHourCount
+  let lapMinute = lapMinuteCount < 10 ? `0${lapMinuteCount}` : lapMinuteCount
+  let lapSecond = lapSecondCount < 10 ? `0${lapSecondCount}` : lapSecondCount
+  let lapMillisecond = lapMillisecondCount
+
+  let overallHour = hourCount < 10 ? `0${hourCount}` : hourCount
+  let overallMinute = minuteCount < 10 ? `0${minuteCount}` : minuteCount
+  let overallSecond = secondCount < 10 ? `0${secondCount}` : secondCount
+  let overallMillisecond = millisecondCount
+
+  resetTimeLaps()
+
+  let timeString = `2024-10-10T${lapHour}:${lapMinute}:${lapSecond}.${lapMillisecond}`
+
+  let currentLapTime = Date.parse(timeString)
+  let previousHighestLapTime = Date.parse(highestLapTime)
+  let previousLowestLapTime = Date.parse(lowestLapTime)
+
+
+  if(currentLapTime > previousHighestLapTime){
+    highestLapTime = timeString
+    changeIsHighestToFalse()
+  }
+  if(currentLapTime < previousLowestLapTime){
+    lowestLapTime = timeString
+    changeIsLowestToFalse()
+  }
+
+
+  function changeIsHighestToFalse(){
+    lapTimingsArray = lapTimingsArray.map(lap => lap.isHighest ? {...lap, isHighest: false} : lap)
+    isHighestLap = true
+  }
+
+  function changeIsLowestToFalse(){
+    lapTimingsArray = lapTimingsArray.map(lap => lap.isLowest ? {...lap, isLowest: false} : lap)
+    isLowestLap = true
+  }
+
+
+  const lapInfo = {
+    lapTime: `${lapHour}:${lapMinute}:${lapSecond}.${lapMillisecond}`,
+    overallTime: `${overallHour}:${overallMinute}:${overallSecond}.${overallMillisecond}`,
+    isHighest: isHighestLap,
+    isLowest: isLowestLap
+  }
+
+
+  lapTimingsArray.push(lapInfo)
+
+  showTimeLaps()
+
+}
+
+function showTimeLaps(){
+  lapsList.innerHTML = ``
+
+  if(!header.classList.contains('hidden')){
+    header.classList.add('hidden')
+
+    setTimeout(function(){
+      document.querySelector('.running-time').style.marginTop = '20px'
+      lapsDisplay.style.display = 'flex'
+    }, 0)
+
+  }
+
+
+  lapTimingsArray.forEach((lap, index) => {
+    const li = document.createElement('li')
+
+    if(lap.isHighest && !lap.isLowest){
+      li.classList.add('red')
     }
-    timePeriodOfHour = 0;
-    timePeriodOfMinute = 0;
-    timePeriodOfsecond = 0;
-    timePeriodOfMs = 0;
-    minute.textContent = timePeriodOfMinute;
-    hour.textContent = timePeriodOfHour;
-    second.textContent = timePeriodOfsecond;
-    ms.textContent = timePeriodOfMs;
-    playPauseButton.style.display = "revert";
-    pause.style.display = "none";
-    clearInterval(secondInterval);
-    clearInterval(msInterval);
-    addtwodigitKeeperMs();
-    addtwodigitKeeperS();
-    hourBeforeColon.style.display = "none";
-    minuteBeforeColon.style.display = "none";
-    minuteColon.style.display = "none";
-    hourColon.style.display = "none";
-    timeMs.style.width = "85%";
-    timelaps.style.display = "none";
-    reset.style.display = "none";
-    lapsDisplay.style.display = "none";
-    document.querySelector(".running-timer").style.marginTop = "100px";
-    document.querySelector(".action").style.marginTop = "45px";
-    lapsCount = 0;
-     playPauseButton.style.transition = "border-radius .5s 0s,width .5s 0s";
-     setTimeout(()=>{
-       playPauseButton.style.width = "100px";
-       playPauseButton.style.borderRadius = "50%";
-       pause.style.width = "100px";
-       pause.style.borderRadius = "50%";
-       document.querySelector("header").style.display = "revert";
-     },200)
-     document.querySelector(".overflow").style.height = "4vh"
-  });
-});
+
+    if(lap.isLowest && !lap.isHighest){
+      li.classList.add('green')
+    }
+
+    li.innerHTML = `
+      <p>${index < 9 ? `0${index + 1}` : index + 1}</p>
+      <p>${lap.lapTime}</p>
+      <p>${lap.overallTime}</p>
+    `
+    lapsList.prepend(li)
+
+  })
+}
+
+function resetTimeLaps(){
+  lapMillisecondCount = 0
+  lapSecondCount = 0
+  lapMinuteCount = 0
+  lapHourCount = 0
+
+  lapsHour.classList.add('hidden')
+  lapsHourColonMinute.classList.add('hidden')
+  lapsMinute.classList.add('hidden')
+  lapsMinuteColonSecond.classList.add('hidden')
+}
+
+
+function resetTheStopWatch(){
+  millisecondCount = 0
+  secondCount = 0
+  minuteCount = 0
+  hourCount = 0
+  clearInterval(timeInterval)
+  header.classList.remove('hidden')
+  lapsDisplay.style.display = 'none'
+
+
+  setTimeout(function(){
+    document.querySelector('.running-time').style.marginTop = '100px'
+  }, 0)
+
+  resetBtn.classList.add('hidden')
+  timelapsBtn.classList.add('hidden')
+
+  pauseBtn.classList.add('hidden')
+  playBtn.classList.remove('hidden')
+
+  setTimeout(function(){
+    playBtn.style.width = '100px'
+    playBtn.style.borderRadius = '50%'
+    pauseBtn.style.width = '100px'
+    pauseBtn.style.borderRadius = '50%'
+  }, 0)
+
+  lapsList.innerHTML = ''
+  lapTimingsArray = []
+
+  highestLapTime = '2024-10-10T00:00:00'
+  lowestLapTime = '2024-10-10T23:59:59'
+
+  resetTimeLaps()
+  showUpdatedTime()
 
 
 
-timelaps.addEventListener("click", () => {
-  lapsDisplay.style.display = "revert";
-  document.querySelector(".running-timer").style.marginTop = "10px";
-  document.querySelector("header").style.display = "none";
-  
-  lapsCount += 1;
-  if (timePeriodOfHour < 10) {
-    var element = document.createElement("p");
-    element.classList.add("para-text");
-    displayHour.prepend(element);
-    element.textContent = `0${timePeriodOfHour}h`;
-    textCount += 1;
-  } else {
-    var element = document.createElement("p");
-    element.classList.add("para-text");
-    displayHour.prepend(element);
-    element.textContent = `${timePeriodOfHour}h`;
-    textCount += 1;
-  }
-
-  if (timePeriodOfMinute < 10) {
-    var element = document.createElement("p");
-    element.classList.add("para-text");
-    displayMinute.prepend(element);
-    element.textContent = `0${timePeriodOfMinute}m`;
-    textCount += 1;
-  } else {
-    var element = document.createElement("p");
-    element.classList.add("para-text");
-    displayMinute.prepend(element);
-    element.textContent = `${timePeriodOfMinute}m`;
-    textCount += 1;
-  }
-
-  if (timePeriodOfsecond < 10) {
-    var element = document.createElement("p");
-    element.classList.add("para-text");
-    displaySecond.prepend(element);
-    element.textContent = `0${timePeriodOfsecond}.${timePeriodOfMs}s`;
-    textCount += 1;
-  } else {
-    var element = document.createElement("p");
-    element.classList.add("para-text");
-    displaySecond.prepend(element);
-    element.textContent = `${timePeriodOfsecond}.${timePeriodOfMs}s`;
-    textCount += 1;
-  }
-
-  if (lapsCount < 10) {
-    var element = document.createElement("p");
-    element.classList.add("para-text");
-    lapsCountDisplay.prepend(element);
-    element.textContent = `#0${lapsCount}`;
-    textCount += 1;
-  } else {
-    var element = document.createElement("p");
-    element.classList.add("para-text");
-    lapsCountDisplay.prepend(element);
-    element.textContent = `#${lapsCount}`;
-    textCount += 1;
-  }
-});
+}

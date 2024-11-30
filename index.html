@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Stopwatch</title>
     <link rel="stylesheet" href="index.css" />
+    <script defer src="index.js"></script>
   </head>
   <body>
 
@@ -14,50 +15,47 @@
     </header>
 
     <main>
-      <section class="running-timer">
-        <section class="time">
-          <section class="hour">
-            <p class="zero-keeper">0</p>
-            <p class="hourCount">00</p>
-          </section>
+      <section class="running-time">
 
-          <p class="hourName">:</p>
+        <div class="time">
+          <p class="hour hidden">00</p>
+          <p class="hour-colon-minute hidden">:</p>
+          <p class="minute hidden">00</p>
+          <p class="minute-colon-second hidden">:</p>
+          <p class="second">00</p>
+        </div>
 
-          <section class="minute">
-            <p class="zero-keeper">0</p>
-            <p class="minuteCount">00</p>
-          </section>
+        <div class="time-ms">
+          <p class="ms">0</p>
+        </div>
 
-          <p class="minuteName">:</p>
-
-          <section class="second">
-            <p class="zero-keeper">0</p>
-            <p class="secondCount">00</p>
-          </section>
-        </section>
-
-        <section class="time-ms">
-          <section class="ms">
-            <p class="zero-keeper">0</p>
-            <p class="msCount">0</p>
-          </section>
-        </section>
+        <div class="laps-time">
+            <span class="laps-hour hidden">00</span>
+            <span class="laps-hour-colon-minute hidden">:</span>
+            <span class="laps-minute hidden">00</span>
+            <span class="laps-minute-colon-second hidden">:</span>
+            <span class="laps-second">00</span>
+            <span>.</span>
+            <span class="laps-millisecond">0</span>
+        </div>
       </section>
 
-      <section class="laps-display">
-        <section class="overflow">
-          <section class="numbering"></section>
-          <section class="display-time">
-            <section class="display-hour"></section>
-            <section class="display-min"></section>
-            <section class="display-sec"></section>
-          </section>
-        </section>
+      <section class="laps-display hidden">
+        <div class="laps-head">
+            <p>Lap</p>
+            <p>Lap time</p>
+            <p>Overall time</p>
+        </div>
+        <ul class="laps-list">
+
+        </ul>
+
       </section>
 
       <section class="action">
-        <section class="buttonChange resetArea">
-          <button class="reset">
+
+        <section>
+          <button class="reset hidden">
             <img
               height="25px"
               width="25px"
@@ -66,26 +64,24 @@
             />
           </button>
         </section>
-        <section class="buttonChange">
-          <button class="playPause">
+
+        <section class="play-and-pause">
+          <button class="play-btn">
             <img
-              height="25px"
-              width="25px"
               src="icons/play_arrow_FILL1_wght400_GRAD0_opsz48.svg"
               alt=""
             />
           </button>
-          <button class="pause">
+          <button class="pause-btn hidden">
             <img
-              height="25px"
-              width="25px"
               src="icons/pause_FILL1_wght400_GRAD0_opsz48.svg"
               alt=""
             />
           </button>
         </section>
-        <section class="buttonChange lapsArea">
-          <button class="time-laps">
+
+        <section>
+          <button class="time-laps hidden">
             <img
               height="25px"
               width="25px"
@@ -96,6 +92,6 @@
         </section>
       </section>
     </main>
-    <script src="index.js"></script>
+
   </body>
 </html>
