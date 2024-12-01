@@ -97,7 +97,7 @@ p.hour-colon-minute,p.minute-colon-second{
   position: absolute;
   bottom: 25px;
   font-size: 1.4rem;
-  display: flex;
+  display: none;
   justify-content: space-around;
   /* gap: 0.2rem; */
 

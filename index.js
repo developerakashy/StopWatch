@@ -22,6 +22,7 @@ const lapsMillisecond = document.querySelector(".laps-millisecond");
 const header = document.querySelector('header')
 const lapsList = document.querySelector('.laps-list')
 const lapsDisplay = document.querySelector('.laps-display')
+const lapsTime = document.querySelector('.laps-time')
 
 let highestLapTime = '2024-10-10T00:00:00'
 let lowestLapTime = '2024-10-10T23:59:59'
@@ -119,9 +120,6 @@ function showUpdatedTime(){
 }
 
 
-
-
-
 playBtn.addEventListener('click', (e) => startOrResumeTheStopWatch(e))
 pauseBtn.addEventListener('click', (e) => pauseTheStopWatch(e))
 
@@ -173,6 +171,7 @@ function resizeBtn(btn){
 }
 
 function showAndResetTimeLaps(){
+  lapsTime.style.display = 'flex'
 
   let isHighestLap = false
   let isLowestLap = false
@@ -186,8 +185,6 @@ function showAndResetTimeLaps(){
   let overallMinute = minuteCount < 10 ? `0${minuteCount}` : minuteCount
   let overallSecond = secondCount < 10 ? `0${secondCount}` : secondCount
   let overallMillisecond = millisecondCount
-
-  resetTimeLaps()
 
   let timeString = `2024-10-10T${lapHour}:${lapMinute}:${lapSecond}.${lapMillisecond}`
 
@@ -215,18 +212,23 @@ function showAndResetTimeLaps(){
     lapTimingsArray = lapTimingsArray.map(lap => lap.isLowest ? {...lap, isLowest: false} : lap)
     isLowestLap = true
   }
+  console.log(lapMinuteCount)
+  let lapTimeStr = lapHourCount ? `${lapHour}:${lapMinute}:${lapSecond}.${lapMillisecond}` :
+                   lapMinuteCount ? `${lapMinute}:${lapSecond}.${lapMillisecond}` : `${lapSecond}.${lapMillisecond}`
 
+  let overallTimeStr = hourCount ? `${overallHour}:${overallMinute}:${overallSecond}.${overallMillisecond}` :
+                       minuteCount ? `${overallMinute}:${overallSecond}.${overallMillisecond}` : `${overallSecond}.${overallMillisecond}`
 
   const lapInfo = {
-    lapTime: `${lapHour}:${lapMinute}:${lapSecond}.${lapMillisecond}`,
-    overallTime: `${overallHour}:${overallMinute}:${overallSecond}.${overallMillisecond}`,
+    lapTime: lapTimeStr,
+    overallTime: overallTimeStr,
     isHighest: isHighestLap,
     isLowest: isLowestLap
   }
 
 
   lapTimingsArray.push(lapInfo)
-
+  resetTimeLaps()
   showTimeLaps()
 
 }
@@ -280,17 +282,27 @@ function resetTimeLaps(){
 
 
 function resetTheStopWatch(){
+  clearInterval(timeInterval)
+
+  header.classList.remove('hidden')
+  lapsDisplay.style.display = 'none'
+  lapsTime.style.display = 'none'
+
   millisecondCount = 0
   secondCount = 0
   minuteCount = 0
   hourCount = 0
-  clearInterval(timeInterval)
-  header.classList.remove('hidden')
-  lapsDisplay.style.display = 'none'
 
+  minute.classList.add('hidden')
+  hour.classList.add('hidden')
 
   setTimeout(function(){
     document.querySelector('.running-time').style.marginTop = '100px'
+
+    playBtn.style.width = '100px'
+    playBtn.style.borderRadius = '50%'
+    pauseBtn.style.width = '100px'
+    pauseBtn.style.borderRadius = '50%'
   }, 0)
 
   resetBtn.classList.add('hidden')
@@ -298,13 +310,6 @@ function resetTheStopWatch(){
 
   pauseBtn.classList.add('hidden')
   playBtn.classList.remove('hidden')
-
-  setTimeout(function(){
-    playBtn.style.width = '100px'
-    playBtn.style.borderRadius = '50%'
-    pauseBtn.style.width = '100px'
-    pauseBtn.style.borderRadius = '50%'
-  }, 0)
 
   lapsList.innerHTML = ''
   lapTimingsArray = []
@@ -314,7 +319,5 @@ function resetTheStopWatch(){
 
   resetTimeLaps()
   showUpdatedTime()
-
-
 
 }
