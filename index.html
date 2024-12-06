@@ -4,15 +4,13 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Stopwatch</title>
+    <title>stopwatch</title>
     <link rel="stylesheet" href="index.css" />
     <script defer src="index.js"></script>
   </head>
   <body>
 
-    <header>
-      <p>StopWatch</p>
-    </header>
+
 
     <main>
       <section class="running-time">
@@ -20,8 +18,8 @@
         <div class="time">
           <p class="hour hidden">00</p>
           <p class="hour-colon-minute hidden">:</p>
-          <p class="minute hidden">00</p>
-          <p class="minute-colon-second hidden">:</p>
+          <p class="minute">00</p>
+          <p class="minute-colon-second">:</p>
           <p class="second">00</p>
         </div>
 
@@ -32,8 +30,8 @@
         <div class="laps-time">
             <span class="laps-hour hidden">00</span>
             <span class="laps-hour-colon-minute hidden">:</span>
-            <span class="laps-minute hidden">00</span>
-            <span class="laps-minute-colon-second hidden">:</span>
+            <span class="laps-minute">00</span>
+            <span class="laps-minute-colon-second">:</span>
             <span class="laps-second">00</span>
             <span>.</span>
             <span class="laps-millisecond">0</span>
@@ -55,7 +53,7 @@
       <section class="action">
 
         <section>
-          <button class="reset hidden">
+          <button class="reset visibility-hidden">
             <img
               height="25px"
               width="25px"
@@ -81,7 +79,7 @@
         </section>
 
         <section>
-          <button class="time-laps hidden">
+          <button class="time-laps visibility-hidden">
             <img
               height="25px"
               width="25px"
