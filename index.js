@@ -54,8 +54,8 @@ resetBtn.addEventListener('click', resetTheStopWatch)
 
 function updateCurrentTiming(){
 
-  millisecond = Math.floor((Date.now() - timeCaptured) / 10) + totalMillisecond
-  lapMillisecond = Math.floor((Date.now() - lapTimeCaptured) / 10) + totalLapMillisecond
+  millisecond = Math.floor(((Date.now() - timeCaptured) / 10) + totalMillisecond)
+  lapMillisecond = Math.floor(((Date.now() - lapTimeCaptured) / 10) + totalLapMillisecond)
 
   let second = Math.floor(millisecond / 100)
   let minute = Math.floor(second / 60)
@@ -65,12 +65,12 @@ function updateCurrentTiming(){
   let lapMinute = Math.floor(lapSecond / 60)
   let lapHour = Math.floor(lapMinute / 60)
 
-  millisecondCount = ((millisecond % 100) / 10)
+  millisecondCount = millisecond % 100 < 10 ? `0${millisecond % 100}` : millisecond % 100
   secondCount = second % 60 < 10 ? `0${second % 60}` : second % 60
   minuteCount = minute % 60 < 10 ? `0${minute % 60}` : minute % 60
   hourCount = hour < 10 ? `0${hour}` : hour
 
-  lapMillisecondCount = ((lapMillisecond % 100) / 10)
+  lapMillisecondCount = lapMillisecond % 100 < 10 ? `0${lapMillisecond % 100}` : lapMillisecond % 100
   lapSecondCount = lapSecond % 60 < 10 ? `0${lapSecond % 60}` : lapSecond % 60
   lapMinuteCount = lapMinute % 60 < 10 ? `0${lapMinute % 60}` : lapMinute % 60
   lapHourCount = lapHour < 10 ? `0${lapHour}` : lapHour
@@ -107,7 +107,7 @@ function showUpdatedTime(){
 function startOrResumeTheStopWatch(e){
     timeCaptured = Date.now()
     lapTimeCaptured = Date.now()
-    timeInterval = setInterval(updateCurrentTiming, 100)
+    timeInterval = setInterval(updateCurrentTiming, 10)
 
     let element = e.currentTarget
 
@@ -230,7 +230,7 @@ function resetTimeLaps(){
   timeCaptured = Date.now()
   lapTimeCaptured = Date.now()
   clearInterval(timeInterval)
-  timeInterval = setInterval(updateCurrentTiming, 100)
+  timeInterval = setInterval(updateCurrentTiming, 10)
 
 
   lapsHour.classList.add('hidden')
@@ -245,7 +245,7 @@ function resetTheStopWatch(){
   lapsDisplay.style.display = 'none'
   lapsTime.style.display = 'none'
 
-  millisecondCount = 0
+  millisecondCount = `00`
   secondCount = `00`
   minuteCount = `00`
   hourCount = 0
