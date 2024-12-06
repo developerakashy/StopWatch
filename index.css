@@ -18,7 +18,7 @@ body {
   margin: 0%;
   padding: 0%;
   height: 100vh;
-  font-size: 55px;
+  font-size: 3.5rem;
   font-family: popins;
   background-color: black;
 }
@@ -47,9 +47,10 @@ main {
   text-align: center;
 }
 
-p.hour-colon-minute,p.minute-colon-second{
+.time > p:nth-child(even){
   width: 1rem;
 }
+
 
 .visibility-hidden{
   visibility: hidden;
@@ -96,12 +97,13 @@ p.hour-colon-minute,p.minute-colon-second{
 
 .laps-time > span{
   font-family: popinsBold;
-  width: 1.9rem;
+  width: 2rem;
   text-align: center;
 }
 
 .laps-time > span:nth-child(even){
-  width: 0.7rem;
+  width: 0.5rem;
+  padding-left: 0.1rem;
 }
 
 .laps-time > span:nth-last-child(1){
@@ -153,12 +155,12 @@ p.hour-colon-minute,p.minute-colon-second{
   overflow-y: scroll;
   scrollbar-width: none;
   margin-top: 0.5rem;
-  padding-bottom: 120px;
+  padding-bottom: 140px;
 
 }
 
 .laps-list > li > p{
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   padding: 12px 5px 0px;
 }
 
@@ -240,14 +242,9 @@ p.hour-colon-minute,p.minute-colon-second{
 }
 
 
-@media (width<400px) {
+@media (width<375px) {
   body {
-    font-size: 35px;
-  }
-
-  .ms {
-    font-size: 35px;
-    font-family: popinsBold;
+    font-size: 3rem;
   }
 
   .running-time {
@@ -256,12 +253,9 @@ p.hour-colon-minute,p.minute-colon-second{
     padding: 20px;
   }
 
-
-
   .laps-display,.laps-head{
     top: 312px;
   }
-
 
   .reset,
   .time-laps {
@@ -270,7 +264,7 @@ p.hour-colon-minute,p.minute-colon-second{
     margin: 0 0.5rem;
   }
 
-  .time > p{
-    width: auto;
+  .time > p:nth-child(odd){
+    width: 4rem;
   }
 }
